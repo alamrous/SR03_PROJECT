@@ -35,7 +35,13 @@ public class ClientController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Client client = new Client(); 	
+		client.setEmail(request.getParameter("email"));
+		client.setPwd(request.getParameter("pwd"));
+		client = ClientManager.selectClientUsingEmailUsingPwd(client.getEmail(), client.getPwd());
+		request.setAttribute("client", client);
+		request.getRequestDispatcher("ConfirmationCreationCompte.jsp").forward(request, response);
+
 	}
 
 	/**
@@ -64,6 +70,10 @@ public class ClientController extends HttpServlet {
 		client.setGender(request.getParameter("gender"));
 		try {
 			ClientManager.insertIntoClient(client);
+			request.setAttribute("client", client);
+			ApplicationController.setClient(client);
+			request.getRequestDispatcher("ConfirmationCreationCompte.jsp").forward(request, response);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

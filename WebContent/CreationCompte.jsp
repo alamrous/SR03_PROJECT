@@ -34,7 +34,11 @@
 <input type="text" name="birthdate"/>
 <br/>
 <label>Sexe</label>
+<label>M</label>
+
 <input type="radio" name="gender" value="M"/>
+<label>F</label>
+
 <input type="radio" name="gender" value="F"/>
 <br/>
 <input type="submit" value="ok"/>

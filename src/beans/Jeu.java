@@ -8,6 +8,8 @@ private Pegi fk_pegi;
 private Double note;
 private String summary;
 private Editeur fk_editeur;
+private Plateforme plateforme;
+private double prix;
 public Jeu() {
 	
 	super();
@@ -57,6 +59,19 @@ public Jeu(Integer id, String title, Pegi fk_pegi, Double note, String summary, 
 	this.note = note;
 	this.summary = summary;
 	this.fk_editeur = fk_editeur;
+}
+public void setPrix(double double1) {
+	// TODO Auto-generated method stub
+	this.prix = double1;
+}
+public Plateforme getPlateforme() {
+	return plateforme;
+}
+public void setPlateforme(Plateforme plateforme) {
+	this.plateforme = plateforme;
+}
+public double getPrix() {
+	return prix;
 }
 
 }

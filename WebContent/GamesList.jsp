@@ -8,8 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<a href="CreationCompte.jsp">Création de compte</a>
-<h2>Liste des jeux</h1>
+<% if(request.getParameter("client") == null){ %>
+<a href="CreationCompte.jsp">Création de comptes</a>
+<a href="ConnexionCompte.jsp">Connexion</a>
+<%} else  {%>
+<a href="ClientCompte.jsp">Mon compte</a>
+<a href="ClientPanier.jsp">Mon panier</a>
+<%} %>
+<h2>Liste des jeux</h2>
 <table style="border: black;">
 <tr>
 <th>Titre</th>
@@ -17,6 +23,9 @@
 <th>Note</th>
 <th>Editeur</th>
 <th>Pays</th>
+<th>Plateforme</th>
+<th>Prix</th>
+
 
 </tr> 
 <% 
@@ -39,21 +48,16 @@ for (i=0; i<liste.length; i++){
 	</td>
 	<td><%=  liste[i].getFk_pegi().getDescription()%></td>
 	<td><%=  liste[i].getNote()%></td>
-		<td><%=  liste[i].getFk_editeur().getDescription()%></td>
-			<td><%=  liste[i].getFk_editeur().getCountry_fk().getNom()%></td>
+	<td><%=  liste[i].getFk_editeur().getDescription()%></td>
+	<td><%=  liste[i].getFk_editeur().getCountry_fk().getNom()%></td>
+	<td><%=  liste[i].getPlateforme().getName()%></td>
+	<td><%=  liste[i].getPrix()%></td>
+						
+			
+			
 	</tr>
 <% } %>
-<%-- <%for(int i = 0; i<liste.length; i ++){	%> --%>
-<!-- <tr> -->
-<%-- <td> <%= liste[i].getTitle()%></td> --%>
-<%-- <td> <%=  liste[i].getFk_pegi().getDescription()%></td> --%>
-<%-- <td> <%=  liste[i].getNote()%></td> --%>
-<%-- <td> <%=  liste[i].getFk_editeur().getDescription()%></td> --%>
-<%-- <td> <%=  liste[i].getFk_editeur().getCountry_fk().getNom()%></td> --%>
 
-<!-- </tr>	 -->
-<%-- 	<% --%>
-<%-- %> --%>
 </table>
 </body>
 </html>

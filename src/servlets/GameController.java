@@ -37,10 +37,13 @@ public class GameController extends HttpServlet {
 		// TODO Auto-generated method stub
 		ArrayList<Jeu> liste= new ArrayList<Jeu>();
 		liste = GameManager.getAllGame();
-	
        try {
     		Jeu[] jeu_liste = liste.toArray(new Jeu[liste.size()]);
+    		for (int i = 0; i < jeu_liste.length; i++) {
+				System.out.println(jeu_liste[i].getPrix());
+			}
     		request.setAttribute("liste", jeu_liste);
+			// request.setAttribute("client", ApplicationController.getClient());
     	   request.getRequestDispatcher("GamesList.jsp").forward(request, response);
 
 	} catch (Exception e) {

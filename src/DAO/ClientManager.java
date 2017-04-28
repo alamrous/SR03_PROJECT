@@ -7,10 +7,47 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.PortableInterceptor.ServerRequestInfo;
+
 import com.mysql.jdbc.Statement;
 
 import beans.Client;
+import servlets.ApplicationController;
 public class ClientManager{
+	public static Client selectClientUsingEmailUsingPwd(String email, String pwd){
+		Client client;
+		ConnexionBDD mysqlConnect = new ConnexionBDD();
+		String sql = "SELECT * FROM test.Client WHERE email = ? AND pwd = ?";
+		Connection connection = mysqlConnect.connect();
+		try {
+			PreparedStatement statement=	connection.prepareStatement(sql);
+			statement.setString(1, email);
+			statement.setString(2, pwd);
+			ResultSet res = statement.executeQuery();
+			if(res.next()) {
+				
+				client = new Client();
+					client.setName(res.getString("name"));	
+					client.setFirstname(res.getString("firstname"));
+					client.setAddress(res.getString("address"));
+					client.setGender(res.getString("gender"));
+					client.setPseudo(res.getString("pseudo"));
+					client.setPwd(res.getString("pwd"));
+					client.setEmail(res.getString("email"));
+					client.setBirthdate(res.getDate("birthdate"));
+					
+					ApplicationController.setClient(client);
+					return client;
+
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 	public static int insertIntoClient(Client client) throws SQLException {
 		int res = 0;
@@ -21,12 +58,8 @@ public class ClientManager{
 				+ "VALUES (?,?,?,?,?,?,CURDATE(),?,?,1);";
 		try {
 	  Connection connection =  mysqlConnect.connect();
-	if (connection == null)
-	{
-	System.out.println("Connection nulle");	
-	return 0;
-	}
-						//Execution et traitement de la réponse
+
+	  //Execution et traitement de la réponse
 		PreparedStatement statement=	connection.prepareStatement(sql);
 		statement.setString(1, client.getName());
 		statement.setString(2, client.getFirstname());
