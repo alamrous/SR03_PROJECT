@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="beans.*"  %>
@@ -12,12 +14,55 @@
 <a href="CreationCompte.jsp">Création de comptes</a>
 <a href="ConnexionCompte.jsp">Connexion</a>
 <%} else  {%>
-<a href="ClientCompte.jsp">Mon compte</a>
+<a href="ClientCompte">Mon compte</a>
 <a href="ClientPanierShow">Mon panier</a>
 <% Client client = (Client)request.getSession().getAttribute("client"); %>
 <%= client.getName()+" "+client.getFirstname() %>
 <a href="GameController">Deconnexion</a>
 <%} %>
+
+<h3> Rechercher un jeu</h3>
+<form action="SearchGame" method="get">
+<table>
+<tr>
+<th>Titre</th>
+<td><input type="text" name="title"/></td>
+</tr>
+<tr>
+<th>Plateforme</th>
+<td>
+<select name="plateforme">
+<%= request.getAttribute("plateformes") %> %>
+</select>
+</td>
+</tr>
+<tr>
+<th>Annee</th>
+<td><input type="text" name="year"/></td>
+</tr>
+<tr>
+<th>Editeur</th>
+<td>
+<select name="editeur">
+<%= request.getAttribute("editeurs") %> %>
+</select>
+</td>
+</tr>
+<tr>
+<th>Prix Minimum</th>
+<td><input type="text" name="minPrice"/></td>
+</tr>
+<tr>
+<th>Prix Maximum</th>
+<td><input type="text" name="maxPrice"/></td>
+</tr>
+<tr>
+<td></td>
+<td><input type="submit" value="Rechercher"/></td>
+</tr>
+</table>
+
+</form>
 <h2>Liste des jeux</h2>
 <table style="border: black;">
 <tr>

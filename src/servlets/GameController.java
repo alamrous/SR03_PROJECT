@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,11 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jboss.resteasy.plugins.server.servlet.Cleanable;
+
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
+import DAO.ClientManager;
+import DAO.EditeurManager;
 import DAO.GameManager;
+import DAO.PlateformeManager;
 import beans.Client;
+import beans.Editeur;
 import beans.Jeu;
+import beans.Plateforme;
 
 /**
  * Servlet implementation class GameController
@@ -37,8 +46,26 @@ public class GameController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Client client= new Client();
-		client.setId(3);
+		client = ClientManager.selectClientUsingId(3);
 		request.getSession().setAttribute("client", client);
+		String  option="";
+		String editeurOption= "";
+		ArrayList<Plateforme> plateformes = PlateformeManager.getPlateforme();
+		plateformes.forEach(Cle-> System.out.println(Cle.getName()));
+		for (Iterator iterator = plateformes.iterator(); iterator.hasNext();) {
+			Plateforme plateforme = (Plateforme) iterator.next();
+			//System.out.println(plateforme.getName());
+			option=option+"<option value=\""+plateforme.getId()+"\">"+plateforme.getName()+"</option> ";
+		}
+		ArrayList<Editeur> editeurs = EditeurManager.getEditeurs();
+		editeurs.forEach(Cle-> System.out.println(Cle.getDescription()));
+		for (Iterator iterator = editeurs.iterator(); iterator.hasNext();) {
+			Editeur editeur= (Editeur) iterator.next();
+			//System.out.println(plateforme.getName());
+			editeurOption=editeurOption+"<option value=\""+editeur.getId()+"\">"+editeur.getDescription()+"</option> ";
+		}
+		request.setAttribute("plateformes", option);
+		request.setAttribute("editeurs", editeurOption);
 
 		if(request.getSession().getAttribute("client") != null && request.getSession().getAttribute("isConnected")!=null)
 		{

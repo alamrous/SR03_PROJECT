@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Création de Compte</title>
 </head>
 <body>
 <h1>Création de compte</h1>
@@ -26,9 +26,6 @@
 <br/>
 <label>Email</label>
 <input type="text" name="email"/>
-<br/>
-<label>Date</label>
-<input type="text" name="date"/>
 <br/>
 <label>Date de naissance</label>
 <input type="text" name="birthdate"/>

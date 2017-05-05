@@ -47,6 +47,39 @@ public class ClientManager{
 		return null;
 		
 	}
+	public static Client selectClientUsingId(Integer id){
+		Client client;
+		ConnexionBDD mysqlConnect = new ConnexionBDD();
+		String sql = "SELECT * FROM test.Client WHERE id = ?";
+		Connection connection = mysqlConnect.connect();
+		try {
+			PreparedStatement statement=	connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			ResultSet res = statement.executeQuery();
+			if(res.next()) {
+				
+				client = new Client();
+				client.setId(res.getInt("id"));
+					client.setName(res.getString("name"));	
+					client.setFirstname(res.getString("firstname"));
+					client.setAddress(res.getString("address"));
+					client.setGender(res.getString("gender"));
+					client.setPseudo(res.getString("pseudo"));
+					client.setPwd(res.getString("pwd"));
+					client.setEmail(res.getString("email"));
+					client.setBirthdate(res.getDate("birthdate"));
+					//System.out.println(client.getName()+client.getPseudo());
+					return client;
+
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 	public static int insertIntoClient(Client client) throws SQLException {
 		int res = 0;
@@ -79,6 +112,51 @@ public class ClientManager{
 		}
 
 		return res;
+	}
+	public static void updateClientProfile(Client client) {
+		// TODO Auto-generated method stub
+int res = 0;
+		
+		ConnexionBDD mysqlConnect = new ConnexionBDD();
+		String sql = "UPDATE `test`.`Client` "
+				+ "SET `name` = ? ,"
+				+ " `firstname` = ? ,"
+				+ " `pseudo` = ? ,"
+				+ " `gender` = ? ,"
+				+ "`email` = ? ,"
+				+ "`birthdate` = ? ,"
+				+ " `address` = ? "
+				+ " WHERE id= ? ; ";
+		try {
+	  Connection connection =  mysqlConnect.connect();
+
+	  //Execution et traitement de la réponse
+		PreparedStatement statement;
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, client.getName());
+			statement.setString(2, client.getFirstname());
+			statement.setString(3, client.getPseudo());
+			statement.setString(4, String.valueOf(client.getGender()));
+			statement.setString(5, client.getEmail());
+		    java.sql.Date sqlDate = new java.sql.Date(client.getBirthdate().getTime());
+
+			statement.setDate(6, sqlDate);
+			statement.setString(7, client.getAddress());
+			statement.setInt(8, client.getId());
+
+			System.out.println(statement);
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		}
+		finally {
+		    mysqlConnect.disconnect();
+		}
+
 	}
 	
 	
