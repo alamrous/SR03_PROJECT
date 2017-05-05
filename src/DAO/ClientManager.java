@@ -12,7 +12,6 @@ import org.omg.PortableInterceptor.ServerRequestInfo;
 import com.mysql.jdbc.Statement;
 
 import beans.Client;
-import servlets.ApplicationController;
 public class ClientManager{
 	public static Client selectClientUsingEmailUsingPwd(String email, String pwd){
 		Client client;
@@ -27,6 +26,7 @@ public class ClientManager{
 			if(res.next()) {
 				
 				client = new Client();
+				client.setId(res.getInt("id"));
 					client.setName(res.getString("name"));	
 					client.setFirstname(res.getString("firstname"));
 					client.setAddress(res.getString("address"));
@@ -35,8 +35,7 @@ public class ClientManager{
 					client.setPwd(res.getString("pwd"));
 					client.setEmail(res.getString("email"));
 					client.setBirthdate(res.getDate("birthdate"));
-					
-					ApplicationController.setClient(client);
+					//System.out.println(client.getName()+client.getPseudo());
 					return client;
 
 			}

@@ -24,7 +24,7 @@ public class ClientController extends HttpServlet {
        
     /**
      * @see HttpServlet#HttpServlet()
-     */
+     */	
     public ClientController() {
         super();
         // TODO Auto-generated constructor stub
@@ -40,6 +40,7 @@ public class ClientController extends HttpServlet {
 		client.setPwd(request.getParameter("pwd"));
 		client = ClientManager.selectClientUsingEmailUsingPwd(client.getEmail(), client.getPwd());
 		request.setAttribute("client", client);
+		request.getSession().setAttribute("client", client);
 		request.getRequestDispatcher("ConfirmationCreationCompte.jsp").forward(request, response);
 
 	}

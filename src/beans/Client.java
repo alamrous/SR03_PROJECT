@@ -2,8 +2,6 @@ package beans;
 
 import java.util.Date;
 
-import javax.resource.spi.RetryableUnavailableException;
-
 
 public class Client {
 	public Client() {
@@ -68,9 +66,6 @@ public void setEmail(String email) {
 }
 public Date getBirthdate() {
 	return birthdate;
-}
-public String getBirthdayString(){
-	return birthdate.toString();
 }
 public void setBirthdate(Date birthdate) {
 	this.birthdate = birthdate;

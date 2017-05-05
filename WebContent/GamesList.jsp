@@ -8,12 +8,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
-<% if(request.getParameter("client") == null){ %>
+<% if(request.getSession().getAttribute("client") == null){ %>
 <a href="CreationCompte.jsp">Création de comptes</a>
 <a href="ConnexionCompte.jsp">Connexion</a>
 <%} else  {%>
 <a href="ClientCompte.jsp">Mon compte</a>
-<a href="ClientPanier.jsp">Mon panier</a>
+<a href="ClientPanierShow">Mon panier</a>
+<% Client client = (Client)request.getSession().getAttribute("client"); %>
+<%= client.getName()+" "+client.getFirstname() %>
+<a href="GameController">Deconnexion</a>
 <%} %>
 <h2>Liste des jeux</h2>
 <table style="border: black;">
@@ -25,8 +28,9 @@
 <th>Pays</th>
 <th>Plateforme</th>
 <th>Prix</th>
-
-
+<% if(request.getSession().getAttribute("client") != null){ %>
+<th> Action </th>
+<%} %>
 </tr> 
 <% 
 try{
@@ -52,6 +56,13 @@ for (i=0; i<liste.length; i++){
 	<td><%=  liste[i].getFk_editeur().getCountry_fk().getNom()%></td>
 	<td><%=  liste[i].getPlateforme().getName()%></td>
 	<td><%=  liste[i].getPrix()%></td>
+	<% if(request.getSession().getAttribute("client") != null){ %>
+<td> <form action="PanierAction" method="post">
+<input type="hidden" name="productId" value="<%= liste[i].getPlateforme_jeu_fk()%>">
+<input type="submit" value="Ajouter">
+</form> </td>
+<%} %>
+</tr> 
 						
 			
 			

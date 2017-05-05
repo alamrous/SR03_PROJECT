@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
 import DAO.GameManager;
+import beans.Client;
 import beans.Jeu;
 
 /**
@@ -35,15 +36,28 @@ public class GameController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Client client= new Client();
+		client.setId(3);
+		request.getSession().setAttribute("client", client);
+
+		if(request.getSession().getAttribute("client") != null && request.getSession().getAttribute("isConnected")!=null)
+		{
+			request.getSession().removeAttribute("client");
+			request.getSession().removeAttribute("isConnected");
+
+		}
+		else
+		{
+			if(request.getSession().getAttribute("client") != null)
+			{
+				request.getSession().setAttribute("isConnected", true);
+			}
+		}
 		ArrayList<Jeu> liste= new ArrayList<Jeu>();
 		liste = GameManager.getAllGame();
        try {
     		Jeu[] jeu_liste = liste.toArray(new Jeu[liste.size()]);
-    		for (int i = 0; i < jeu_liste.length; i++) {
-				System.out.println(jeu_liste[i].getPrix());
-			}
     		request.setAttribute("liste", jeu_liste);
-			// request.setAttribute("client", ApplicationController.getClient());
     	   request.getRequestDispatcher("GamesList.jsp").forward(request, response);
 
 	} catch (Exception e) {

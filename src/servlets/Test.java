@@ -14,6 +14,7 @@ import DAO.ClientManager;
 public class Test extends HttpServlet {
 	
 public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
-	//
+
+	
 	}
 }

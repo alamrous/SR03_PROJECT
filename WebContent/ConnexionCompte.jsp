@@ -15,7 +15,5 @@
 <input type="text" name="pwd"/>
 <br/>
 <input type="submit" value="Connexion"/>
-
-</form>
 </body>
 </html>

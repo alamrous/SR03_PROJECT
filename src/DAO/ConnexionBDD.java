@@ -32,7 +32,7 @@ public Connection connect() {
 
         try {
 			conn = DriverManager.getConnection(
-			           "jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false",
+			           "jdbc:mysql://localhost:3306/test",
 			           connectionProps);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

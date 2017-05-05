@@ -8,6 +8,7 @@ private Pegi fk_pegi;
 private Double note;
 private String summary;
 private Editeur fk_editeur;
+private Integer plateforme_jeu_fk;
 private Plateforme plateforme;
 private double prix;
 public Jeu() {
@@ -72,6 +73,12 @@ public void setPlateforme(Plateforme plateforme) {
 }
 public double getPrix() {
 	return prix;
+}
+public Integer getPlateforme_jeu_fk() {
+	return plateforme_jeu_fk;
+}
+public void setPlateforme_jeu_fk(Integer plateforme_jeu_fk) {
+	this.plateforme_jeu_fk = plateforme_jeu_fk;
 }
 
 }

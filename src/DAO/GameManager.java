@@ -3,6 +3,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -19,13 +20,13 @@ public static ArrayList<Jeu> getAllGame(){
 	ArrayList<Jeu> liste = new ArrayList<Jeu>();
 	ConnexionBDD mysqlConnect = new ConnexionBDD();
 	String sql = "SELECT test.Jeu.*, test.Pegi.description AS Pegi_description, test.Editeur.nom AS Editeur_name, test.Pays.nom AS Country_name, "
-			+ "Jeu_Plateforme.prix as Prix, Plateforme.nom as plat_name "
-			+ "FROM test.Jeu LEFT OUTER JOIN test.Jeu_Plateforme ON test.Jeu_Plateforme.jeu_fk = test.Jeu.id"
-			+ "LEFT OUTER JOIN test.Plateforme ON test.Jeu_Plateforme.plateforme_fk=test.Plateforme.id"
-			+ "INNER JOIN test.Pegi ON test.Pegi.id=test.Jeu.pegi_fk"
-			+ "INNER  JOIN test.Editeur ON test.Editeur.id=test.Jeu.editeur_fk"
-			+ "iNNER  JOIN test.Pays ON test.Pays.id=test.Editeur.country_fk" ;
-	
+			+ " Jeu_Plateforme.prix as Prix, Jeu_Plateforme.id,Plateforme.nom as plat_name "
+			+ " FROM test.Jeu"
+			+ " INNER JOIN test.Jeu_Plateforme ON test.Jeu_Plateforme.jeu_fk = test.Jeu.id"
+			+ " INNER JOIN test.Plateforme ON test.Jeu_Plateforme.plateforme_fk=test.Plateforme.id"
+			+ " INNER JOIN test.Pegi ON test.Pegi.id=test.Jeu.pegi_fk"
+			+ " INNER  JOIN test.Editeur ON test.Editeur.id=test.Jeu.editeur_fk"
+			+ " iNNER  JOIN test.Pays ON test.Pays.id=test.Editeur.country_fk" ;
 	try {
 	Connection connection =  mysqlConnect.connect();
 	PreparedStatement statement=	connection.prepareStatement(sql);
@@ -48,6 +49,7 @@ public static ArrayList<Jeu> getAllGame(){
 		
 		plateforme = new Plateforme();
 		plateforme.setName(res.getString("plat_name"));
+		jeu.setId(res.getInt("Jeu.id"));
 		jeu.setPrix(res.getDouble("Prix"));
 		jeu.setFk_editeur(editeur);
 		jeu.setFk_pegi(pegi);
@@ -55,8 +57,8 @@ public static ArrayList<Jeu> getAllGame(){
 		jeu.setSummary(res.getString("summary"));
 		jeu.setTitle(res.getString("title"));
 		jeu.setPlateforme(plateforme);
+		jeu.setPlateforme_jeu_fk(res.getInt("Jeu_Plateforme.id"));
 		liste.add(jeu);
-		
 //	(Integer id, String title, Integer fk_pegi, Double note, String summary, Integer fk_editeur)
 	}
 	
@@ -64,8 +66,46 @@ public static ArrayList<Jeu> getAllGame(){
 	mysqlConnect.disconnect();
 	}			
 	catch (Exception e) {
+		System.out.println(e.toString());
 		// TODO: handle exception
 	}
 	return liste;
+}
+
+public static Jeu getGameUsingId(Integer valueOf) {
+	Jeu jeu = null;
+	ConnexionBDD mysqlConnect = new ConnexionBDD();
+String sql = "SELECT test.Jeu.* , test.Plateforme.nom, test.Jeu_Plateforme.id, test.Jeu_Plateforme.prix "
+		+ " FROM test.Jeu "
+		+ "LEFT OUTER JOIN test.Jeu_Plateforme ON test.Jeu_Plateforme.jeu_fk = test.Jeu.id "
+		+ " LEFT OUTER JOIN test.Plateforme ON test.Plateforme.id = test.Jeu_Plateforme.plateforme_fk "
+		+ "WHERE test.Jeu_Plateforme.id = ? ";
+
+Connection connection =  mysqlConnect.connect();
+try {
+	PreparedStatement statement=	connection.prepareStatement(sql);
+	statement.setInt(1, valueOf);
+	ResultSet res = statement.executeQuery();
+	if(res.next())
+	{
+		jeu = new Jeu();
+		jeu.setId(res.getInt("Jeu.id"));
+		jeu.setPrix(res.getDouble("prix"));
+		jeu.setTitle(res.getString("title"));
+		jeu.setPlateforme_jeu_fk(res.getInt("Jeu_Plateforme.id"));
+		Plateforme plateforme = new Plateforme();
+		plateforme.setName("Plateforme.nom");
+		jeu.setPlateforme(plateforme);
+
+		}
+return jeu;
+	
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+	
+	return null;
 }
 }
