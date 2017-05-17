@@ -8,22 +8,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- <script type="text/javascript" src="js/test.js"></script> -->
+<style type="text/css">
+    <%@include file="bootstrap/css/bootstrap.css" %>
+    <%@include file="bootstrap/css/bootstrap-theme.css" %>    
+</style>
 <title>Mon panier</title>
 </head>
-<body>
+<body style="padding: 70px">
+<%@ include file="header.jsp"%>
+
 <h1>Mon panier</h1>
-<a href="GameController">Retour à l'accueil</a>
+<div class="row">
+<div class="col col-8 col-md-offset-2">
 <%Panier[] panier = null; 	
 Client client= (Client) request.getSession().getAttribute("client");
 request.getSession().removeAttribute("isConnected");
 Panier[] achats= null;
 if ((panier =(Panier[]) request.getSession().getAttribute("panier")) != null){ %>
-<table>
+<table class="table">
 <tr>
 <th>Id</th>
 <th> Jeu </th>
-<th> Plateforme </th>s</th>
-</tr>
+<th> Plateforme </th>
 <th> Date d'ajout </th>
 <th> Prix </th>
 <th>Actions</th>
@@ -35,20 +41,38 @@ if ((panier =(Panier[]) request.getSession().getAttribute("panier")) != null){ %
 <td> <%= panier[i].getJeu().getPlateforme().getName() %> </td>
 <td> <%= panier[i].getDate_creation() %> </td>
 <td> <%= panier[i].getJeu().getPrix() %> </td>
-<td> <form action="PanierAction" method="GET"><input type="hidden" name="id_panier" value="<%= panier[i].getId() %>"> <input type="submit" value="Supprimer"></form></td>
+<td> <form action="PanierAction" method="GET">
+<input type="hidden" name="id_panier" value="<%= panier[i].getId() %>">
+ <input type="submit" class="btn btn-danger" value="Supprimer"></form></td>
 </tr>
 
 <%} %>
 
 </tr>
 </table>
-<h2> Total </h2> <%= request.getSession().getAttribute("total") %>
-<form action="AchatController" method="POST"><input type="submit" value="Acheter"></form>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-offset-3 col-md-3">
+ <h3>Total</h3> 
+</div>
+<div class="col-md-offset-3 col-md-1">
+<h3>
+<%= request.getSession().getAttribute("total") %>€
+</h3>
+</div>
+<div class="col-md-2">
+<form action="AchatController" method="POST"><input type="submit" value="Acheter" class="btn btn-success"></form>
+</div>
+</div>
 <%} %>
 
 <h2> Achats effectués</h2>
 <% if((achats =(Panier[]) request.getSession().getAttribute("achats")) !=null){ %>
-<table>
+<div class="row">
+<div class="col-md-9 col-md-offset-2">
+<table class="table">
 <tr>
 <th> Jeu </th>
 <th> Plateforme </th>
@@ -66,6 +90,9 @@ if ((panier =(Panier[]) request.getSession().getAttribute("panier")) != null){ %
 <%} %>
 </tr>
 </table>
+
+</div>
+</div>
 <% } %>
 </body>
 </html>

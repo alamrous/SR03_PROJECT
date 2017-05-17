@@ -23,7 +23,6 @@ public class EditeurManager {
 			{
 				editeur = new Editeur();
 				editeur.setId(res.getInt("id"));
-				System.out.println(res.getString("nom"));
 				editeur.setDescription(res.getString("nom"));
 				editeurs_list.add(editeur);
 			}

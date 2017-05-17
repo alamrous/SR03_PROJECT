@@ -5,9 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+    <%@include file="bootstrap/css/bootstrap.css" %>
+    <%@include file="bootstrap/css/bootstrap-theme.css" %>    
+</style>
 <title>Confirmation</title>
 </head>
-<body>
+<body style="padding: 70px">
+<%@ include file="header.jsp"%>
 <h2>Validation de la création de compte</h2>
 <%Client client = (Client)request.getAttribute("client");%>
 <p>Bienvenue<%= client.getName() %>, retour à l'<a href="GameController">Accueil</a> </p>

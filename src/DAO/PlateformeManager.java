@@ -24,7 +24,6 @@ public class PlateformeManager {
 			{
 				plateforme = new Plateforme();
 				plateforme.setId(res.getInt("id"));
-				System.out.println(res.getString("nom"));
 				plateforme.setName(res.getString("nom"));
 				plateforme_list.add(plateforme);
 			}

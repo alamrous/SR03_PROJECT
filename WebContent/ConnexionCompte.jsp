@@ -4,16 +4,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<style type="text/css">
+    <%@include file="bootstrap/css/bootstrap.css" %>
+    <%@include file="bootstrap/css/bootstrap-theme.css" %>    
+</style>
+<title>ConnexionCompte</title>
 </head>
-<body>
+<%@ include file="header.jsp"%>
+
+<body style="padding: 70px">
+<h1> S'authentifier</h1>
+<div class="row">
+<div class="col-md-3 col-md-offset-4" style="background-color: #e8e8e8;border-radius: 10px;padding-top: 30px;padding-bottom: 50px;">
 <form action="ClientController" method="get">
 <label>Email</label>
-<input type="text" name="email"/>
+<input type="text" name="email" class="form-control"/>
 <br/>
 <label>Password</label>
-<input type="text" name="pwd"/>
+<input type="text" name="pwd" class="form-control"/>
 <br/>
-<input type="submit" value="Connexion"/>
+<input type="submit" class="form-control btn btn-primary" value="Connexion"/>
+</form>
+</div>
+</div>
 </body>
 </html>

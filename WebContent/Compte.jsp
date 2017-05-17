@@ -5,16 +5,37 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+    <%@include file="bootstrap/css/bootstrap.css" %>
+    <%@include file="bootstrap/css/bootstrap-theme.css" %>    
+</style>
 <title>Mon Compte</title>
 </head>
-<body>
+<%@ include file="header.jsp"%>
+<body style="padding-top: 70px;">
 <% Client client = (Client) request.getSession().getAttribute("client"); %>
-<a href="ChangePwd" method="POST">Modifier le mot de passe</a>
-<a href="EditProfile.jsp">Editer Mon Profil</a>
-<a href="ClientPanierShow">Mes achats</a>
-<a href="ClientPanierShow">Mon Panier</a>
+<!-- <a href="ClientPanierShow">Mes achats</a> -->
+<!-- <a href="ClientPanierShow">Mon Panier</a> -->
 <h1> Mes informations</h1>
-<table>
+<div class="row">
+<div class="col-md-5 col-md-offset-6">
+<a href="ChangePwd" method="POST">
+<button class="btn btn-primary">
+Modifier le mot de passe
+</button>
+</a>
+<a href="EditProfile.jsp">
+<button class="btn btn-info">
+Editer Mon Profil
+</button>
+</a>
+</div>
+</div>
+<div class="row">
+<div class="col-md-3 col-md-offset-3" style="
+    border-radius: 10px;
+    background-color: rgba(220, 220, 220, 0.56);">
+<table style="border-collapse: separate;border-spacing:0 5px;">
 <tr>
 <th>Nom</th>
 <td><%= client.getName() %></td>
@@ -44,5 +65,8 @@
 <td><%= client.getAddress() %></td>
 </tr>
 </table>
+
+</div>
+</div>
 </body>
 </html>
