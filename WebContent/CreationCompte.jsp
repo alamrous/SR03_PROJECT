@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="WebContent\\js\\formValidator.js"></script>
 <style type="text/css">
     <%@include file="bootstrap/css/bootstrap.css" %>
     <%@include file="bootstrap/css/bootstrap-theme.css" %>    
@@ -15,17 +16,17 @@
 <h1>Création de compte</h1>
 <div class="row">
 <div class="col-md-5 col-md-offset-3">
-<form action="ClientController" method="post">
-<label>Name</label>
+<form name="creationCompteForm" action="ClientController" method="post" onsubmit="return validateForm()">
+<label>Nom</label>
 <input type="text" name="name" class="form-control"/>
 <br/>
-<label>FirstName</label>
+<label>Prénom</label>
 <input type="text" name="firstname" class="form-control"/>
 <br/>
 <label>Pseudo</label>
 <input type="text" name="pseudo" class="form-control"/>
 <br/>
-<label>Password</label>
+<label>Mot de passe</label>
 <input type="text" name="pwd" class="form-control"/>
 <br/>
 <label>Adresse</label>
